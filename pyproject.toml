@@ -2,7 +2,7 @@
 name = "widom"
 version = "0.1.0"
 authors = [{ name = "Pim de Haan", email = "pim@cusp.ai" }]
-description = "Add your description here"
+description = "A Python package for performing Widom insertion simulations to calculate gas adsorption properties in porous materials"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
