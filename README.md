@@ -6,8 +6,8 @@ A Python package for performing Widom insertion simulations to calculate gas ads
 
 Widom insertion is a Monte Carlo method used to calculate thermodynamic properties of gas adsorption in porous materials. This package implements the Widom insertion technique to compute:
 
-- **Henry coefficient** (mol/kg/Pa) - measure of gas solubility at low pressure
-- **Heat of adsorption** (kJ/mol) - enthalpy change upon gas adsorption
+- **Henry coefficient** (mol/kg/Pa) - measure of gas affinity to a material at low pressure
+- **Heat of adsorption** (kJ/mol) - enthalpy change associated with the adsorption of a single gas molecule
 - **Interaction energies** - energy of gas-framework interactions
 
 The implementation is derived from [DAC-SIM](https://github.com/hspark1212/DAC-SIM) and is designed to work with any ASE-compatible calculator for energy evaluations.
