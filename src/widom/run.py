@@ -5,11 +5,11 @@ from ase.build import molecule
 from ase.calculators.calculator import Calculator
 from ase.io import read
 
-from .ase_widom_insertion import (
+from .analyze import (
     WidomInsertionResults,
     analyze_widom_insertions,
-    ase_widom_insertion,
 )
+from .sample_compute_energies import sample_compute_energies
 from .utils import optimize_atoms
 
 
@@ -26,8 +26,6 @@ def run_widom_insertion(
     min_interplanar_distance: float = 6.0,
     random_seed: int = 0,
 ) -> WidomInsertionResults:
-    # Download files from remote storage
-
     # Load structure
     structure_atoms = read(structure)
     assert isinstance(structure_atoms, Atoms), "Structure must be an ASE Atoms object."
@@ -57,7 +55,7 @@ def run_widom_insertion(
 
     # Run Widom insertion
     print(f"Running Widom insertion with {num_insertions} insertions...")
-    energies, is_accessible, gas_positions = ase_widom_insertion(
+    energies, is_accessible, gas_positions = sample_compute_energies(
         calculator=calculator,
         structure=optimized_structure,
         gas=optimized_gas,

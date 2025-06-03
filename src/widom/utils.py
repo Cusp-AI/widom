@@ -7,7 +7,7 @@ MIT-licensed
 from typing import Optional
 
 import numpy as np
-from ase import Atoms
+from ase import Atoms, units
 from ase.calculators.calculator import Calculator
 from ase.filters import FrechetCellFilter
 from ase.io import Trajectory
@@ -233,3 +233,52 @@ def create_supercell_if_needed(structure: Atoms, min_interplanar_distance: float
         structure = structure.repeat(supercell)
 
     return structure
+
+
+def bootstrap_ratio_std(
+    numerator: np.ndarray,
+    denominator: np.ndarray,
+    n_bootstrap: int,
+    random_seed: int,
+) -> float:
+    """Calculate standard deviation of ratio estimator using bootstrap.
+
+    Args:
+        numerator: Array of numerator values
+        denominator: Array of denominator values
+        n_bootstrap: Number of bootstrap samples
+
+    Returns:
+        float: Standard deviation of the ratio estimator
+    """
+    n = len(numerator)
+    ratios = np.zeros(n_bootstrap)
+
+    rng = np.random.default_rng(random_seed)
+
+    for i in range(n_bootstrap):
+        # Generate bootstrap sample indices (with replacement)
+        indices = rng.choice(n, size=n, replace=True)
+
+        # Calculate ratio for this bootstrap sample
+        num_sample = numerator[indices]
+        denom_sample = denominator[indices]
+        ratios[i] = num_sample.mean() / denom_sample.mean()
+
+    # Return standard deviation of bootstrap ratios
+    return float(np.std(ratios))
+
+
+def calculate_atomic_density(atoms: Atoms) -> float:
+    """
+    Calculate atomic density of the atoms.
+
+    Args:
+        atoms: The Atoms object to operate on.
+
+    Returns:
+        Atomic density of the atoms in kg/m³.
+    """
+    volume = atoms.get_volume() * 1e-30  # Convert Å³ to m³
+    total_mass = np.sum(atoms.get_masses()) * units._amu  # Convert amu to kg # type: ignore
+    return total_mass / volume
