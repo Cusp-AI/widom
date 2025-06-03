@@ -1,9 +1,3 @@
-"""
-The code in this file is derived from
-https://github.com/hspark1212/DAC-SIM
-MIT-licensed
-"""
-
 from typing import Optional
 
 import numpy as np
@@ -272,6 +266,10 @@ def bootstrap_ratio_std(
 def calculate_atomic_density(atoms: Atoms) -> float:
     """
     Calculate atomic density of the atoms.
+
+    The code in this function is derived from
+    https://github.com/hspark1212/DAC-SIM
+    MIT-licensed
 
     Args:
         atoms: The Atoms object to operate on.
