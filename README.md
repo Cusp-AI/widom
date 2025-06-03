@@ -32,15 +32,18 @@ pip install -e .
 ```python
 from widom import run_widom_insertion
 from ase.calculators.your_calculator import YourCalculator
-from pathlib import Path
+from ase.io import read
 
 # Set up your calculator
 calculator = YourCalculator()
 
+# Load structure
+structure = read("structure.cif")
+
 # Run Widom insertion simulation
 results = run_widom_insertion(
     calculator=calculator,
-    structure=Path("structure.cif"),
+    structure=structure,
     gas="CO2",
     temperature=298.15,  # K
     model_outputs_interaction_energy=False,
@@ -61,7 +64,7 @@ Main function to perform Widom insertion simulation.
 
 **Parameters:**
 - `calculator` (Calculator): ASE calculator for energy calculations
-- `structure` (Path): Path to structure file (CIF, XYZ, etc.)
+- `structure` (Atoms): ASE Atoms object representing the framework structure
 - `gas` (str): Gas molecule name (e.g., 'H2', 'CO2', 'CH4')
 - `temperature` (float): Temperature in Kelvin
 - `model_outputs_interaction_energy` (bool): Whether calculator outputs interaction energies directly

@@ -1,9 +1,6 @@
-from pathlib import Path
-
 from ase import Atoms
 from ase.build import molecule
 from ase.calculators.calculator import Calculator
-from ase.io import read
 
 from .analyze import (
     WidomInsertionResults,
@@ -15,7 +12,7 @@ from .utils import optimize_atoms
 
 def run_widom_insertion(
     calculator: Calculator,
-    structure: Path,
+    structure: Atoms,
     gas: str,
     temperature: float,
     model_outputs_interaction_energy: bool,
@@ -34,7 +31,7 @@ def run_widom_insertion(
 
     Args:
         calculator: ASE calculator for energy calculations.
-        structure: Path to the structure file.
+        structure: ASE Atoms object representing the framework structure.
         gas: Name of the gas molecule to insert (e.g., 'H2', 'CO2').
         temperature: Temperature in Kelvin for the simulation.
         model_outputs_interaction_energy: Whether the calculator outputs interaction energies directly.
@@ -48,9 +45,6 @@ def run_widom_insertion(
     Returns:
         Results containing Henry coefficient, heat of adsorption, and other computed properties.
     """
-    # Load structure
-    structure_atoms = read(structure)
-    assert isinstance(structure_atoms, Atoms), "Structure must be an ASE Atoms object."
     gas_atoms = molecule(gas)
 
     # Optionally optimize structures
@@ -58,7 +52,7 @@ def run_widom_insertion(
         print("Optimizing structure...")
         optimized_structure = optimize_atoms(
             calculator=calculator,
-            atoms=structure_atoms,
+            atoms=structure,
         )
         if optimized_structure is None:
             raise ValueError("Structure optimization failed.")
@@ -72,7 +66,7 @@ def run_widom_insertion(
         if optimized_gas is None:
             raise ValueError("Gas molecule optimization failed.")
     else:
-        optimized_structure = structure_atoms
+        optimized_structure = structure
         optimized_gas = gas_atoms
 
     # Run Widom insertion
