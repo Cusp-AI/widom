@@ -45,6 +45,22 @@ def analyze_widom_insertions(
     energies_are_interaction: bool,
     random_seed: int,
 ) -> WidomInsertionResults:
+    """Analyze Widom insertion results to calculate thermodynamic properties.
+
+    Args:
+        energies: Array of total energies for each insertion attempt.
+        is_accessible: Array indicating which insertions were successful.
+        gas_positions: Array of positions of the inserted gas molecules.
+        energy_structure: Total energy of the bare structure.
+        energy_gas: Total energy of the isolated gas molecule.
+        temperature: Temperature in Kelvin.
+        structure: The framework structure.
+        energies_are_interaction: Whether the energies are already interaction energies.
+        random_seed: Seed for bootstrap calculations.
+
+    Returns:
+        Results containing Henry coefficient, heat of adsorption, and other properties.
+    """
     if energies_are_interaction:
         interaction_energies = energies  # [eV]
     else:

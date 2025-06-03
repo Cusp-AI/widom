@@ -18,13 +18,13 @@ def sample_gas_positions(
     """Sample random positions and orientations for gas molecules.
 
     Args:
-        structure: Atoms object representing the framework structure
-        gas: Atoms object representing the gas molecule to insert
-        num_insertions: Number of random insertions to perform
-        rng: NumPy random number generator
+        structure: Atoms object representing the framework structure.
+        gas: Atoms object representing the gas molecule to insert.
+        num_insertions: Number of random insertions to perform.
+        rng: NumPy random number generator.
 
     Returns:
-        Array of gas positions with shape (num_insertions, num_gas_atoms, 3)
+        Array of gas positions with shape (num_insertions, num_gas_atoms, 3).
     """
     # Uniformly sample positions in the unit cell
     random_positions = rng.random((num_insertions, 3))
@@ -59,14 +59,14 @@ def check_accessibility(
     """Check which gas insertions are accessible (non-overlapping with framework atoms).
 
     Args:
-        gas_positions: Array of gas positions with shape (num_insertions, num_gas_atoms, 3)
-        framework_coords: Array of framework atom positions
-        lattice_matrix: 3x3 lattice matrix for periodic boundary conditions
-        cutoff_distance: Minimum allowed distance between framework and gas atoms
-        cutoff_to_com: Whether to use the center of mass for distance calculations
+        gas_positions: Array of gas positions with shape (num_insertions, num_gas_atoms, 3).
+        framework_coords: Array of framework atom positions.
+        lattice_matrix: 3x3 lattice matrix for periodic boundary conditions.
+        cutoff_distance: Minimum allowed distance between framework and gas atoms.
+        cutoff_to_com: Whether to use the center of mass for distance calculations.
 
     Returns:
-        Boolean array indicating which insertions are accessible
+        Boolean array indicating which insertions are accessible.
     """
     num_insertions, num_gas_atoms = gas_positions.shape[:2]
 
@@ -123,29 +123,18 @@ def optimize_atoms(
     https://github.com/hspark1212/DAC-SIM
     MIT-licensed
 
-    Parameters
-    ----------
-    calculator : Calculator
-        ASE calculator for the optimization
-    atoms : Atoms
-        Atoms object to optimize
-    num_total_optimization : int, default=30
-        The number of optimization steps including internal and cell relaxation
-    num_internal_steps : int, default=50
-        The number of internal steps (freezing the cell)
-    num_cell_steps : int, default=50
-        The number of optimization steps (relaxing the cell)
-    fmax : float, default=0.05
-        The threshold for the maximum force to stop the optimization
-    cell_relax : bool, default=True
-        If True, relax the cell
-    trajectory_file : str, optional
-        Path to the trajectory file. If provided, the trajectory will be saved.
+    Args:
+        calculator: ASE calculator for the optimization.
+        atoms: Atoms object to optimize.
+        num_total_optimization: The number of optimization steps including internal and cell relaxation.
+        num_internal_steps: The number of internal steps (freezing the cell).
+        num_cell_steps: The number of optimization steps (relaxing the cell).
+        fmax: The threshold for the maximum force to stop the optimization.
+        cell_relax: If True, relax the cell.
+        trajectory_file: Path to the trajectory file. If provided, the trajectory will be saved.
 
-    Returns
-    -------
-    Optional[Atoms]
-        The optimized atoms object
+    Returns:
+        The optimized atoms object, or None if optimization failed.
     """
     if trajectory_file is not None:
         trajectory = Trajectory(trajectory_file, "w", atoms)
@@ -195,17 +184,12 @@ def create_supercell_if_needed(structure: Atoms, min_interplanar_distance: float
     https://github.com/hspark1212/DAC-SIM
     MIT-licensed
 
-    Parameters
-    ----------
-    structure : Atoms
-        The structure to potentially expand into a supercell
-    min_interplanar_distance : float, default=6.0
-        Minimum interplanar distance before constructing a supercell, in angstroms
+    Args:
+        structure: The structure to potentially expand into a supercell.
+        min_interplanar_distance: Minimum interplanar distance before constructing a supercell, in angstroms.
 
-    Returns
-    -------
-    Atoms
-        The original structure or supercell if expansion was needed
+    Returns:
+        The original structure or supercell if expansion was needed.
     """
     structure = structure.copy()
 
@@ -238,12 +222,13 @@ def bootstrap_ratio_std(
     """Calculate standard deviation of ratio estimator using bootstrap.
 
     Args:
-        numerator: Array of numerator values
-        denominator: Array of denominator values
-        n_bootstrap: Number of bootstrap samples
+        numerator: Array of numerator values.
+        denominator: Array of denominator values.
+        n_bootstrap: Number of bootstrap samples.
+        random_seed: Seed for the random number generator.
 
     Returns:
-        float: Standard deviation of the ratio estimator
+        Standard deviation of the ratio estimator.
     """
     n = len(numerator)
     ratios = np.zeros(n_bootstrap)
@@ -264,8 +249,7 @@ def bootstrap_ratio_std(
 
 
 def calculate_atomic_density(atoms: Atoms) -> float:
-    """
-    Calculate atomic density of the atoms.
+    """Calculate atomic density of the atoms.
 
     The code in this function is derived from
     https://github.com/hspark1212/DAC-SIM

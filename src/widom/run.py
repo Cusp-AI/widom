@@ -26,6 +26,28 @@ def run_widom_insertion(
     min_interplanar_distance: float = 6.0,
     random_seed: int = 0,
 ) -> WidomInsertionResults:
+    """Run Widom insertion simulation to calculate Henry coefficient and heat of adsorption.
+
+    The code in this function is derived from
+    https://github.com/hspark1212/DAC-SIM
+    MIT-licensed
+
+    Args:
+        calculator: ASE calculator for energy calculations.
+        structure: Path to the structure file.
+        gas: Name of the gas molecule to insert (e.g., 'H2', 'CO2').
+        temperature: Temperature in Kelvin for the simulation.
+        model_outputs_interaction_energy: Whether the calculator outputs interaction energies directly.
+        num_insertions: Number of random insertion attempts.
+        optimize_structures: Whether to optimize the structure and gas molecule before insertion.
+        cutoff_distance: Minimum allowed distance between framework and gas atoms in angstroms.
+        cutoff_to_com: Whether to use center of mass for distance calculations.
+        min_interplanar_distance: Minimum interplanar distance before constructing a supercell, in angstroms.
+        random_seed: Seed for random number generator to ensure reproducibility.
+
+    Returns:
+        Results containing Henry coefficient, heat of adsorption, and other computed properties.
+    """
     # Load structure
     structure_atoms = read(structure)
     assert isinstance(structure_atoms, Atoms), "Structure must be an ASE Atoms object."
@@ -71,6 +93,9 @@ def run_widom_insertion(
     print(f"Energy of structure: {energy_structure} eV")
     print(f"Energy of gas: {energy_gas} eV")
 
+    assert energy_structure is not None, "Energy of the structure must be computed."
+    assert energy_gas is not None, "Energy of the gas molecule must be computed."
+
     # Analyze results
     print("Analyzing results...")
     results = analyze_widom_insertions(
@@ -79,8 +104,8 @@ def run_widom_insertion(
         gas_positions=gas_positions,
         temperature=temperature,
         structure=optimized_structure,
-        energy_structure=energy_structure,  # type: ignore
-        energy_gas=energy_gas,  # type: ignore
+        energy_structure=energy_structure,
+        energy_gas=energy_gas,
         energies_are_interaction=model_outputs_interaction_energy,
         random_seed=random_seed,
     )

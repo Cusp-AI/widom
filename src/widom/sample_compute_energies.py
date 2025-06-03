@@ -23,18 +23,20 @@ def sample_compute_energies(
     of adsorption.
 
     Args:
-        calculator: Calculator object from ASE to calculate energies
-        structure: Atoms object representing the framework structure
-        gas: Atoms object representing the gas molecule to insert
-        num_insertions: Number of random insertions to perform
-        cutoff_distance: Minimum allowed distance between framework atoms and gas molecule, in angstroms
-        min_interplanar_distance: Minimum interplanar distance before constructing a supercell, in angstroms
-        random_seed: Seed for random number generator to ensure reproducibility
+        calculator: Calculator object from ASE to calculate energies.
+        structure: Atoms object representing the framework structure.
+        gas: Atoms object representing the gas molecule to insert.
+        num_insertions: Number of random insertions to perform.
+        cutoff_distance: Minimum allowed distance between framework atoms and gas molecule, in angstroms.
+        cutoff_to_com: Whether to use the center of mass for distance calculations.
+        min_interplanar_distance: Minimum interplanar distance before constructing a supercell, in angstroms.
+        random_seed: Seed for random number generator to ensure reproducibility.
 
     Returns:
-        Array of total energies (in eV) for each insertion attempt
-        Array of booleans indicating whether the insertion was successful (non-overlapping with framework atoms)
-        Array of positions of the inserted gas molecules
+        A tuple containing:
+            - Array of total energies (in eV) for each insertion attempt.
+            - Array of booleans indicating whether the insertion was successful (non-overlapping with framework atoms).
+            - Array of positions of the inserted gas molecules.
     """
     structure = structure.copy()
     gas = gas.copy()
