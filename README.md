@@ -28,17 +28,15 @@ pip install -e .
 ```
 
 ## Quick Start
+To demonstrate the usage of this library, we are using a Si crystal and Lennard-Jones calculator. The resulting numbers should not taken to be chemically meaningful.
 
 ```python
 from widom import run_widom_insertion
-from ase.calculators.your_calculator import YourCalculator
-from ase.io import read
+from ase.build import bulk
+from ase.calculators.lj import LennardJones
 
-# Set up your calculator
-calculator = YourCalculator()
-
-# Load structure
-structure = read("structure.cif")
+calculator = LennardJones(epsilon=1, sigma=0.6)  # Example calculator
+structure = bulk("Si")  # Example structure
 
 # Run Widom insertion simulation
 results = run_widom_insertion(
@@ -47,8 +45,8 @@ results = run_widom_insertion(
     gas="CO2",
     temperature=298.15,  # K
     model_outputs_interaction_energy=False,
-    num_insertions=10000,
-    random_seed=42
+    num_insertions=1000,
+    random_seed=42,
 )
 
 # Access results
