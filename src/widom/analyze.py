@@ -43,6 +43,7 @@ def analyze_widom_insertions(
     temperature: float,
     structure: Atoms,
     energies_are_interaction: bool,
+    min_interaction_energy: float,
     random_seed: int,
 ) -> WidomInsertionResults:
     """Analyze Widom insertion results to calculate thermodynamic properties.
@@ -56,6 +57,7 @@ def analyze_widom_insertions(
         temperature: Temperature in Kelvin.
         structure: The framework structure.
         energies_are_interaction: Whether the energies are already interaction energies.
+        min_interaction_energy: Minimum valid interaction energy for the gas molecule. [eV]
         random_seed: Seed for bootstrap calculations.
 
     Returns:
@@ -69,7 +71,7 @@ def analyze_widom_insertions(
     num_samples = len(interaction_energies)
 
     # If the model gives too low interaction energy, we treat it as invalid.
-    is_valid = interaction_energies > -1.25
+    is_valid = interaction_energies > min_interaction_energy  # [eV]
     # Set invalid energies to a large value
     interaction_energies_valid = np.where(is_valid, interaction_energies, 1e10)  # [eV]
 

@@ -74,6 +74,7 @@ Main function to perform Widom insertion simulation.
 - `cutoff_to_com` (bool): Use center of mass for distance calculations (default: False)
 - `min_interplanar_distance` (float): Minimum interplanar distance for supercell construction in Å (default: 6.0)
 - `random_seed` (int): Seed for reproducibility (default: 0)
+- `min_interaction_energy` (float): Minimum valid interaction energy for the gas molecule in eV (default: -1.25)
 
 **Returns:**
 - `WidomInsertionResults`: Object containing computed properties and metadata

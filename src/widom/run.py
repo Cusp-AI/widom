@@ -22,6 +22,7 @@ def run_widom_insertion(
     cutoff_to_com: bool = False,  # Whether to use center of mass for cutoff
     min_interplanar_distance: float = 6.0,
     random_seed: int = 0,
+    min_interaction_energy: float = -1.25,
 ) -> WidomInsertionResults:
     """Run Widom insertion simulation to calculate Henry coefficient and heat of adsorption.
 
@@ -41,6 +42,7 @@ def run_widom_insertion(
         cutoff_to_com: Whether to use center of mass for distance calculations.
         min_interplanar_distance: Minimum interplanar distance before constructing a supercell, in angstroms.
         random_seed: Seed for random number generator to ensure reproducibility.
+        min_interaction_energy: Minimum valid interaction energy for the gas molecule, in eV.
 
     Returns:
         Results containing Henry coefficient, heat of adsorption, and other computed properties.
@@ -102,6 +104,7 @@ def run_widom_insertion(
         energy_gas=energy_gas,
         energies_are_interaction=model_outputs_interaction_energy,
         random_seed=random_seed,
+        min_interaction_energy=min_interaction_energy,
     )
 
     print("Results:")
