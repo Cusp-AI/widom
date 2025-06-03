@@ -120,8 +120,5 @@ pytest tests/
 
 ## License
 
-MIT License - see the original [DAC-SIM](https://github.com/hspark1212/DAC-SIM) project for attribution.
-
-## Citation
-
-If you use this package, please cite the original DAC-SIM work and any relevant publications from the calculator you use for energy evaluations.
+MIT License.
+Some parts are derived from [DAC-SIM](https://github.com/hspark1212/DAC-SIM), which is also MIT licensed.
