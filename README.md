@@ -122,5 +122,5 @@ pytest tests/
 
 ## License
 
-MIT License.
-Some parts are derived from [DAC-SIM](https://github.com/hspark1212/DAC-SIM), which is also MIT licensed.
+Apache 2.0 licensed.
+Some parts are derived from [DAC-SIM](https://github.com/hspark1212/DAC-SIM), which is MIT licensed.
